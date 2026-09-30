@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "clock.h"
-#include "aux.h"
+#include "aux.c"
 
 /* formulas
 int i;
