@@ -1,17 +1,45 @@
+/* @author bcsarah@main.c
+ *
+ * this is the main of the application.
+ * pls view the --help u dumb
+ * or man it (it doesnt has a man page)
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "clock.c"
 
 
+/* == [ USAGE FUNCTIONS ] == */
+void show_help(void)
+{
+    printf("USAGE: cclock [func]\n");
+}
+
+void pomodoro_usage(void)
+{
+    printf("USAGE: cclock pomodoro [pom] [brk]\n");
+    printf("\tcclock pomodoro        -> 25min / 5min\n");
+    printf("\tcclock pomodoro 30     -> 30min / 5min\n");
+    printf("\tcclock pomodoro 30 10  -> 30min / 10min\n");
+}
+
+// show timer function help
+void timer_usage(void)
+{
+    printf("USAGE: cclock timer [h] [m] [s]\n");
+    printf("\tcclock timer 10      -> 10s\n");
+    printf("\tcclock timer 15 10   -> 15m, 10s\n");
+    printf("\tcclock timer 1 15 10 -> 1h, 15m 10s\n");
+}
+
+
 /* ===[ MAIN ]=== */
 int main(int argc, char *argv[])
 {
     if (argc < 2) // if no option, doesnt run
-    {
-        printf("USAGE: cclock [func]\n");
-        return 1;
-    }
+        show_help(); return 1;
     char *opt = argv[1];
 
 
@@ -19,7 +47,7 @@ int main(int argc, char *argv[])
     if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
     {
         // TODO add the fucking start time configuration
-        stopwatch(0);
+        stopwatch();
     }
 
     // timer
@@ -28,7 +56,7 @@ int main(int argc, char *argv[])
         int h = 0, m = 0, s = 0;
 
         if (argc > 5)
-            timer_help(); return 1;
+            timer_usage(); return 1;
 
         // asign seconds, minutes and hours by position (s, m, h)
         if (argc >= 2) // default (5 minutes timer)
@@ -57,7 +85,7 @@ int main(int argc, char *argv[])
         else if (argc == 4)
             pomodoro(atoi(argv[2]), atoi(argv[3]));
         else
-            pomodoro_help(); return 1;
+            pomodoro_usage(); return 1;
     }
 
     return 0;
