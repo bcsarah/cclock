@@ -30,6 +30,7 @@ void print_formatted_hour(int s, int m, int h)
     sleep(1);
 }
 
+// make a sound alert a certain amount of beeps
 void sound_alert(int count)
 {
     for (int i = 0; i < count; i++)
@@ -37,5 +38,24 @@ void sound_alert(int count)
         printf("\a");
         fflush(stdout);
         sleep(1);
+    }
+}
+
+// function to continue pomodoro
+void continue_pomodoro(void)
+{
+    char input;
+
+    while (1)
+    {
+        printf("do you wish to continue? (y/n) ");
+        scanf(" %c", &input);
+
+        // input validation
+        if (input == 'y')
+            printf("\n");
+        else if (input == 'n')
+            exit(0);
+        break;
     }
 }

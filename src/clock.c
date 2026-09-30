@@ -20,9 +20,9 @@ int s = i % 60;
 /* ==[ CLOCK FUNCTIONS ]== */
 
 // start a stopwatch by 0
-int stopwatch(void)
+void stopwatch(void)
 {
-    int i;
+    int i = 0;
 
     while (1)
     {
@@ -33,12 +33,10 @@ int stopwatch(void)
         print_formatted_hour(s, m, h);
         i++;
     }
-
-    return 0;
 }
 
 // start an timer for hour, min and seg
-int timer(int hour, int min, int seg)
+void timer(int hour, int min, int seg)
 {
     int i = hour * 3600 + min * 60 + seg;
 
@@ -56,23 +54,26 @@ int timer(int hour, int min, int seg)
     printf("\r00:00");
     sound_alert(5);
     printf("\n");
-    return 0;
 }
 
 // run a pomodoro
-int pomodoro(int pom, int brk)
+void pomodoro(int pom, int brk)
 {
     int i = 1;
 
     while (1)
     {
         printf("[ LOOP %d ]\n", i);
+
         printf("starting %dmin pomodoro...\n", pom);
         timer(0, pom, 0);
+        continue_pomodoro();
+
         printf("starting %dmin break...\n", brk);
         timer(0, brk, 0);
+        continue_pomodoro();
+
         printf("\n");
         i++;
     }
-    return 0;
 }
