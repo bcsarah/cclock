@@ -4,10 +4,10 @@
 
 ## to-do
 - [x] sound 
+- [x] good comments
 - [ ] log
 - [ ] pause
-- [x] good comments (i suck at ts)
-- [ ] a good readme
+- [ ] a good readme (i suck at ts)
 
 > embrace the void.
 
