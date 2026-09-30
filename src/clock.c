@@ -1,8 +1,15 @@
+/* @author bcsarah@clock.c
+ *
+ * it coitains the clock functions,
+ * such as pomodoro, timer and
+ * a stopwatch.
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include "aux.c"
 
-/* formulas
+/* formula
 int i;
 int h = i / 3600;
 int m = (i % 3600) / 60;
@@ -10,60 +17,62 @@ int s = i % 60;
 */
 
 
-/* ==[ FUNCTIONS ]== (literally) */
-int stopwatch()
-{
-    int i = 0, h = 0, m = 0, s = 0;
+/* ==[ CLOCK FUNCTIONS ]== */
 
+// start a stopwatch by 0
+int stopwatch(int s_time)
+{
     while (1)
     {
-        s = i % 60;
-        m = (i % 3600) / 60;
-        h = i / 3600;
+        int s = s_time % 60;
+        int m = (s_time % 3600) / 60;
+        int h = s_time / 3600;
 
-        clearLine();
-        if (h > 0)
-            printf("\r%d:%02d:%02d", h, m, s);
-        else
-            printf("\r%02d:%02d", m, s);
+        clear_line();
+        print_formatted_hour(s, m, h);
 
         fflush(stdout);
         sleep(1);
-        i++;
+        s_time++;
     }
 
     return 0;
 }
 
-// timer
+// start an timer for hour, min and seg
 int timer(int hour, int min, int seg)
 {
     int i = hour * 3600 + min * 60 + seg;
-    int h, m, s;
 
     while (i > 0)
     {
-        s = i % 60;
-        m = (i % 3600) / 60;
-        h = i / 3600;
+        int s = i % 60;
+        int m = (i % 3600) / 60;
+        int h = i / 3600;
 
-        clearLine();
-        if (h > 0)
-            printf("%d:%02d:%02d", h, m, s);
-        else
-            printf("%02d:%02d", m, s);
+        clear_line();
+        print_formatted_hour(s, m, h);
 
         fflush(stdout);
         sleep(1);
         i--;
     }
 
-    clearLine();
+    clear_line();
     printf("\r00:00\n");
     return 0;
 }
 
-// pomodoro
+// show timer function help
+void timer_help(void)
+{
+    printf("USAGE: cclock timer [h] [m] [s]\n");
+    printf("\tcclock timer 10      -> 10s\n");
+    printf("\tcclock timer 15 10   -> 15m, 10s\n");
+    printf("\tcclock timer 1 15 10 -> 1h, 15m 10s\n");
+}
+
+// run a pomodoro
 int pomodoro(int pom, int brk)
 {
     int i = 1;
@@ -79,4 +88,12 @@ int pomodoro(int pom, int brk)
         i++;
     }
     return 0;
+}
+
+void pomodoro_help(void)
+{
+    printf("USAGE: cclock pomodoro [pom] [brk]\n");
+    printf("\tcclock pomodoro         -> 25min / 5min\n");
+    printf("\tcclock pomodoro 30      -> 30min / 5min\n");
+    printf("\tcclock pomodoro 30 10   -> 30min / 10min\n");
 }

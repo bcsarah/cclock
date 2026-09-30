@@ -16,69 +16,48 @@ int main(int argc, char *argv[])
 
 
     // stopwatch
-    if (strcmp(opt, "-s") == 0 || strcmp(opt, "--stopwatch") == 0)
-        stopwatch();
+    if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
+    {
+        // TODO add the fucking start time configuration
+        stopwatch(0);
+    }
 
     // timer
-    else if (strcmp(opt, "-t") == 0 || strcmp(opt, "--timer") == 0)
+    else if (strcmp(opt, "t") == 0 || strcmp(opt, "timer") == 0)
     {
-        int n = argc - 2;   // how many numbers
         int h = 0, m = 0, s = 0;
 
-        if (n < 1 || n > 3)
-        {
-            printf("USAGE: cclock -t [h] [m] [s]\n");
-            printf("\tcclock -t 10      -> 10s\n");
-            printf("\tcclock -t 15 10   -> 15m, 10s\n");
-            printf("\tcclock -t 1 15 10 -> 1h, 15m 10s\n");
-            return 1;
-        }
+        if (argc > 5)
+            timer_help(); return 1;
 
-        // preenche da direita pra esquerda: s, depois m, depois h
-        if (n >= 1) // último  = segundos
+        // asign seconds, minutes and hours by position (s, m, h)
+        if (argc >= 2) // default (5 minutes timer)
+            timer(0, 5, 0); return 0;
+        if (argc >= 3) // last = seconds
             s = atoi(argv[argc - 1]);
-        if (n >= 2) // penúltimo = minutos
+        if (argc >= 4) // penultimate = minutes 
             m = atoi(argv[argc - 2]);
-        if (n >= 3) // antepenúltimo = horas
+        if (argc >= 5) // antepenultimate = hours 
             h = atoi(argv[argc - 3]);
 
-        if (h < 0 || m < 0 || s < 0)
-        {
-            printf("Erro: valores negativos não são permitidos\n");
-            return 1;
-        }
-
-        if (h == 0 && m == 0 && s == 0)
-        {
-            printf("Erro: o tempo deve ser maior que zero\n");
-            return 1;
-        }
+        // verify if time is below 0
+        if ((h < 0 || m < 0 || s < 0) || (h == 0 && m == 0 && s == 0))
+            printf("ERROR: time must be above 0\n"); return 1;
 
         timer(h, m, s);
     }
 
     // pomodoro
-    else if (strcmp(argv[1], "-p") == 0 || strcmp(argv[1], "--pomodoro") == 0)
+    else if (strcmp(argv[1], "p") == 0 || strcmp(argv[1], "pomodoro") == 0)
     {
-        int n = argc - 2; // how many args
-
-        if (n == 0)
+        if (argc == 2)
             pomodoro(25, 5);
-
-        else if (n == 1)
+        else if (argc == 3)
             pomodoro(atoi(argv[2]), 5);
-
-        else if (n == 2)
+        else if (argc == 4)
             pomodoro(atoi(argv[2]), atoi(argv[3]));
-
         else
-        {
-            printf("USAGE: cclock -p [pom] [brk]\n");
-            printf("\tcclock -p         -> 25min / 5min\n");
-            printf("\tcclock -p 30      -> 30min / 5min\n");
-            printf("\tcclock -p 30 10   -> 30min / 10min\n");
-            return 1;
-        }
+            pomodoro_help(); return 1;
     }
 
     return 0;
