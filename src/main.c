@@ -39,7 +39,10 @@ void timer_usage(void)
 int main(int argc, char *argv[])
 {
     if (argc < 2) // if no option, doesnt run
-        show_help(); return 1;
+    {
+        show_help();
+        return 1;
+    }
     char *opt = argv[1];
 
 
@@ -56,11 +59,17 @@ int main(int argc, char *argv[])
         int h = 0, m = 0, s = 0;
 
         if (argc > 5)
-            timer_usage(); return 1;
+        {
+            timer_usage();
+            return 1;
+        }
 
         // asign seconds, minutes and hours by position (s, m, h)
         if (argc >= 2) // default (5 minutes timer)
-            timer(0, 5, 0); return 0;
+        {
+            timer(0, 5, 0);
+            return 0;
+        }
         if (argc >= 3) // last = seconds
             s = atoi(argv[argc - 1]);
         if (argc >= 4) // penultimate = minutes 
@@ -70,7 +79,10 @@ int main(int argc, char *argv[])
 
         // verify if time is below 0
         if ((h < 0 || m < 0 || s < 0) || (h == 0 && m == 0 && s == 0))
-            printf("ERROR: time must be above 0\n"); return 1;
+        {
+            printf("ERROR: time must be above 0\n");
+            return 1;
+        }
 
         timer(h, m, s);
     }
@@ -85,7 +97,10 @@ int main(int argc, char *argv[])
         else if (argc == 4)
             pomodoro(atoi(argv[2]), atoi(argv[3]));
         else
-            pomodoro_usage(); return 1;
+        {
+            pomodoro_usage();
+            return 1;
+        }
     }
 
     return 0;
