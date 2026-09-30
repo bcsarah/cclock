@@ -53,7 +53,9 @@ int timer(int hour, int min, int seg)
     }
 
     clear_line();
-    printf("\r00:00\n");
+    printf("\r00:00");
+    sound_alert(5);
+    printf("\n");
     return 0;
 }
 

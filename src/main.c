@@ -43,11 +43,15 @@ int main(int argc, char *argv[])
         show_help();
         return 1;
     }
+
     char *opt = argv[1];
 
+    // show help
+    if (strcmp(opt, "--help") == 0 || strcmp(opt, "-h") == 0)
+        show_help();
 
     // stopwatch
-    if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
+    else if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
     {
         // TODO add the fucking start time configuration
         stopwatch();
@@ -56,7 +60,7 @@ int main(int argc, char *argv[])
     // timer
     else if (strcmp(opt, "t") == 0 || strcmp(opt, "timer") == 0)
     {
-        int h = 0, m = 0, s = 0;
+        int h, m, s;
 
         if (argc > 5)
         {
@@ -64,12 +68,14 @@ int main(int argc, char *argv[])
             return 1;
         }
 
-        // asign seconds, minutes and hours by position (s, m, h)
-        if (argc >= 2) // default (5 minutes timer)
+        // starts with default time if no time is given
+        if (argc == 2) // default (5 minutes timer)
         {
             timer(0, 5, 0);
             return 0;
         }
+        
+        // asign seconds, minutes and hours by position (s, m, h)
         if (argc >= 3) // last = seconds
             s = atoi(argv[argc - 1]);
         if (argc >= 4) // penultimate = minutes 

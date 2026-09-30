@@ -3,9 +3,11 @@
 - feel free to use ts s2
 
 ## to-do
-- [ ] sound 
+- [x] sound 
 - [ ] log
 - [ ] pause
-- [ ] good comments (i suck at ts)
-- [ ] a good readme 
+- [x] good comments (i suck at ts)
+- [ ] a good readme
+
+> embrace the void.
 
