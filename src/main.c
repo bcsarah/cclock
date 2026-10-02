@@ -2,7 +2,6 @@
  *
  * this is the main of the application.
  * pls view the --help u dumb
- * or man it (it doesnt has a man page)
  */
 
 #include <stdio.h>
@@ -51,7 +50,10 @@ int main(int argc, char *argv[])
 {
     // if no option, use the default clock feature
     if (argc < 2)
+    {
         digital_clock();
+        return 0;
+    }
 
     char *opt = argv[1];
 

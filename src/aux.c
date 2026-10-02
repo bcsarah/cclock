@@ -44,13 +44,18 @@ void sound_alert(int count)
 }
 
 // function to continue pomodoro
-void continue_pomodoro(void)
+void continue_pomodoro(int start)
 {
     char input;
 
     while (1)
     {
-        printf("do you wish to continue? (y/n) ");
+        // verify if is the start pomodor or not
+        if (start == 0)
+            printf("do you wish to start pomodoro? (y/n) ");
+        else
+            printf("do you wish to continue? (y/n) ");
+
         scanf(" %c", &input);
 
         // input validation

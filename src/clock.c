@@ -23,8 +23,9 @@ int s = i % 60;
 // view the damn hours
 void digital_clock(void)
 {
-    // this code is copied by Bro Code, using this video as reference:
+    // this code is stealed from Bro Code, using this video as reference:
     // https://www.youtube.com/watch?v=s3QMbp7TlFg
+    // i s2 u bro code (marry w me)
     time_t rawtime = 0; // UNIX epoch (Jan 1 1970)
     struct tm *p_time = NULL;
 
@@ -43,19 +44,18 @@ void digital_clock(void)
     }
 }
 
-// start a stopwatch by 0
-void stopwatch(int i_min, int i_seg)
+// start a stopwatch with initial time feature
+void stopwatch(int min, int seg)
 {
-    int i = i_min * 60 + i_seg;
+    int i = min * 60 + seg;
 
     while (1)
     {
-        int s = i % 60;
-        int m = (i % 3600) / 60;
         int h = i / 3600;
+        int m = (i % 3600) / 60;
+        int s = i % 60;
 
-        print_formatted_hour(h, m, s);
-        i++;
+        print_formatted_hour(h, m, s); i++;
     }
 }
 
@@ -66,9 +66,9 @@ void timer(int hour, int min, int seg)
 
     while (i > 0)
     {
-        int s = i % 60;
-        int m = (i % 3600) / 60;
         int h = i / 3600;
+        int m = (i % 3600) / 60;
+        int s = i % 60;
 
         print_formatted_hour(h, m, s);
         i--;
@@ -76,26 +76,30 @@ void timer(int hour, int min, int seg)
 
     clear_line();
     printf("\r00:00");
-    sound_alert(5);
+    sound_alert(3);
     printf("\n");
 }
 
 // run a pomodoro
 void pomodoro(int pom, int brk)
 {
+    // verify if the user want to start the pomodoro rn
+    continue_pomodoro(0);
+
     int i = 1;
 
     while (1)
     {
         printf("[ LOOP %d ]\n", i);
 
+
         printf("starting %dmin pomodoro...\n", pom);
         timer(0, pom, 0);
-        continue_pomodoro();
+        continue_pomodoro(1);
 
         printf("starting %dmin break...\n", brk);
         timer(0, brk, 0);
-        continue_pomodoro();
+        continue_pomodoro(1);
 
         printf("\n");
         i++;
