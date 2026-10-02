@@ -20,9 +20,9 @@ int s = i % 60;
 /* ==[ CLOCK FUNCTIONS ]== */
 
 // start a stopwatch by 0
-void stopwatch(void)
+void stopwatch(int i_min, int i_seg)
 {
-    int i = 0;
+    int i = i_min * 60 + i_seg;
 
     while (1)
     {
@@ -30,7 +30,7 @@ void stopwatch(void)
         int m = (i % 3600) / 60;
         int h = i / 3600;
 
-        print_formatted_hour(s, m, h);
+        print_formatted_hour(h, m, s);
         i++;
     }
 }
@@ -46,7 +46,7 @@ void timer(int hour, int min, int seg)
         int m = (i % 3600) / 60;
         int h = i / 3600;
 
-        print_formatted_hour(s, m, h);
+        print_formatted_hour(h, m, s);
         i--;
     }
 

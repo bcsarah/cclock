@@ -17,21 +17,31 @@ void show_help(void)
     printf("USAGE: cclock [func]\n");
 }
 
-void pomodoro_usage(void)
+// show stopwatch function help
+void stopwatch_usage(void)
 {
-    printf("USAGE: cclock pomodoro [pom] [brk]\n");
-    printf("\tcclock pomodoro        -> 25min / 5min\n");
-    printf("\tcclock pomodoro 30     -> 30min / 5min\n");
-    printf("\tcclock pomodoro 30 10  -> 30min / 10min\n");
+    printf("USAGE: cclock stopwatch [initial_m] [initial_s]\n");
+    printf("\tcclock stopwatch        -> 00:00\n");
+    printf("\tcclock stopwatch 30     -> 00:30\n");
+    printf("\tcclock stopwatch 30 10  -> 30:10\n");
 }
 
 // show timer function help
 void timer_usage(void)
 {
     printf("USAGE: cclock timer [h] [m] [s]\n");
-    printf("\tcclock timer 10      -> 10s\n");
-    printf("\tcclock timer 15 10   -> 15m, 10s\n");
-    printf("\tcclock timer 1 15 10 -> 1h, 15m 10s\n");
+    printf("\tcclock timer 10      -> 00:10\n");
+    printf("\tcclock timer 15 10   -> 15:10\n");
+    printf("\tcclock timer 1 15 10 -> 01:15:10\n");
+}
+
+// show pomodoro function help
+void pomodoro_usage(void)
+{
+    printf("USAGE: cclock pomodoro [pom] [brk]\n");
+    printf("\tcclock pomodoro        -> 25min / 5min\n");
+    printf("\tcclock pomodoro 30     -> 30min / 5min\n");
+    printf("\tcclock pomodoro 30 10  -> 30min / 10min\n");
 }
 
 
@@ -53,8 +63,36 @@ int main(int argc, char *argv[])
     // stopwatch
     else if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
     {
-        // TODO add the fucking start time configuration
-        stopwatch();
+        int m, s;
+        
+        // verify args quantity again
+        if (argc > 4)
+        {
+            stopwatch_usage();
+            return 1;
+        }
+        
+        // starts with default stating time
+        if (argc == 2)
+        {
+            stopwatch(0, 0); // default
+            return 0;
+        }
+
+        // asign seconds, minutes and hours by position (s, m, h)
+        if (argc >= 3) // last = seconds
+            s = atoi(argv[argc - 1]);
+        if (argc >= 4) // penultimate = minutes 
+            m = atoi(argv[argc - 2]);
+        
+        // verify if time is below 0
+        if (m < 0 || s < 0)
+        {
+            printf("ERROR: time must be above or equals 0\n");
+            return 0;
+        }
+
+        stopwatch(m, s);
     }
 
     // timer
@@ -62,6 +100,7 @@ int main(int argc, char *argv[])
     {
         int h, m, s;
 
+        // verify args quantity again
         if (argc > 5)
         {
             timer_usage();
@@ -69,9 +108,9 @@ int main(int argc, char *argv[])
         }
 
         // starts with default time if no time is given
-        if (argc == 2) // default (5 minutes timer)
+        if (argc == 2)
         {
-            timer(0, 5, 0);
+            timer(0, 5, 0); // default (5 minutes timer)
             return 0;
         }
         

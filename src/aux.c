@@ -17,12 +17,12 @@ void clear_line(void)
 
 // print formatted hour. if no hour, doesnt print it
 // it also sleep and clear the line
-void print_formatted_hour(int s, int m, int h)
+void print_formatted_hour(int h, int m, int s)
 {
     clear_line();
 
     if (h > 0)
-        printf("%d:%02d:%02d", h, m, s);
+        printf("%02d:%02d:%02d", h, m, s);
     else
         printf("%02d:%02d", m, s);
 
