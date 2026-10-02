@@ -61,6 +61,10 @@ int main(int argc, char *argv[])
     if (strcmp(opt, "--help") == 0 || strcmp(opt, "-h") == 0)
         show_help();
 
+    // clock
+    else if (strcmp(opt, "c") == 0 || strcmp(opt, "clock")  == 0)
+        digital_clock();
+
     // stopwatch
     else if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
     {

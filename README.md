@@ -6,10 +6,12 @@
 - [x] sound 
 - [x] good comments
 - [x] initial stopwatch time
+- [x] clock in cclock
 - [ ] log
 - [ ] pause
-- [ ] a good --help
-- [ ] a good readme (i suck at ts)
+
+* [ ] a good --help
+* [ ] a good readme (i suck at ts)
 
 > embrace the void.
 

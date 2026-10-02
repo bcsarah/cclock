@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <time.h>
 #include <unistd.h>
 #include "aux.c"
 
@@ -18,6 +19,29 @@ int s = i % 60;
 
 
 /* ==[ CLOCK FUNCTIONS ]== */
+
+// view the damn hours
+void digital_clock(void)
+{
+    // this code is copied by Bro Code, using this video as reference:
+    // https://www.youtube.com/watch?v=s3QMbp7TlFg
+    time_t rawtime = 0; // UNIX epoch (Jan 1 1970)
+    struct tm *p_time = NULL;
+
+    // show the damm hours
+    while (1)
+    {
+        time(&rawtime);
+        p_time = localtime(&rawtime);
+
+        clear_line();
+
+        printf("\r%02d:%02d:%02d", p_time->tm_hour, p_time->tm_min, p_time->tm_sec);
+        fflush(stdout);
+
+        sleep(1);
+    }
+}
 
 // start a stopwatch by 0
 void stopwatch(int i_min, int i_seg)

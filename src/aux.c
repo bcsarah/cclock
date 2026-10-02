@@ -56,6 +56,8 @@ void continue_pomodoro(void)
             printf("\n");
         else if (input == 'n')
             exit(0);
+        else
+            continue;
         break;
     }
 }
