@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     // stopwatch
     else if (strcmp(opt, "s") == 0 || strcmp(opt, "stopwatch") == 0)
     {
-        int m, s;
+        int m = 0, s = 0;
         
         // verify args quantity again
         if (argc > 4)
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         if (m < 0 || s < 0)
         {
             printf("ERROR: time must be above or equals 0\n");
-            return 0;
+            return 1;
         }
 
         stopwatch(m, s);
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     // timer
     else if (strcmp(opt, "t") == 0 || strcmp(opt, "timer") == 0)
     {
-        int h, m, s;
+        int h = 0, m = 0, s = 0;
 
         // verify args quantity again
         if (argc > 5)

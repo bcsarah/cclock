@@ -6,13 +6,15 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 
 /* == AUXILIARY == */
 // just clean a line xd
 void clear_line(void)
 {
-    printf("\r               \r");
+    printf("\r\033[K"); // clear all the line with ANSI
+    fflush(stdout);
 }
 
 // print formatted hour. if no hour, doesnt print it
