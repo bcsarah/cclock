@@ -14,6 +14,7 @@
 /* == [ USAGE FUNCTIONS ] == */
 void show_help(void)
 {
+    // TODO make a good --help
     printf("USAGE: cclock [func]\n");
 }
 

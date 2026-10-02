@@ -5,8 +5,10 @@
 ## to-do
 - [x] sound 
 - [x] good comments
+- [x] initial stopwatch time
 - [ ] log
 - [ ] pause
+- [ ] a good --help
 - [ ] a good readme (i suck at ts)
 
 > embrace the void.
