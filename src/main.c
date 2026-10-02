@@ -49,11 +49,9 @@ void pomodoro_usage(void)
 /* ===[ MAIN ]=== */
 int main(int argc, char *argv[])
 {
-    if (argc < 2) // if no option, doesnt run
-    {
-        show_help();
-        return 1;
-    }
+    // if no option, use the default clock feature
+    if (argc < 2)
+        digital_clock();
 
     char *opt = argv[1];
 
