@@ -7,64 +7,65 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
 
 /* == AUXILIARY == */
 // just clean a line xd
-void clear_line(void)
-{
-    printf("\r\033[K"); // clear all the line with ANSI
-    fflush(stdout);
+void clear_line(void) {
+  printf("\r\033[K"); // clear all the line with ANSI
+  fflush(stdout);
+}
+
+// wait a second duuh
+void wait_a_sec(void) {
+  clock_t stop = clock() + CLOCKS_PER_SEC;
+  while (clock() < stop) {
+  }
 }
 
 // print formatted hour. if no hour, doesnt print it
 // it also sleep and clear the line
-void print_formatted_hour(int h, int m, int s)
-{
-    clear_line();
+void print_formatted_hour(int h, int m, int s) {
+  clear_line();
 
-    if (h > 0)
-        printf("%02d:%02d:%02d", h, m, s);
-    else
-        printf("%02d:%02d", m, s);
+  if (h > 0)
+    printf("%02d:%02d:%02d", h, m, s);
+  else
+    printf("%02d:%02d", m, s);
 
-    fflush(stdout);
-    sleep(1);
+  fflush(stdout);
 }
 
 // make a sound alert a certain amount of beeps
-void sound_alert(int count)
-{
-    for (int i = 0; i < count; i++)
-    {
-        printf("\a");
-        fflush(stdout);
-        sleep(1);
-    }
+void sound_alert(int count) {
+  for (int i = 0; i < count; i++) {
+    printf("\a");
+    fflush(stdout);
+    if (!(i == count - 1))
+      wait_a_sec();
+  }
 }
 
 // function to continue pomodoro
-void continue_pomodoro(int start)
-{
-    char input;
+void continue_pomodoro(int start) {
+  char input;
 
-    while (1)
-    {
-        // verify if is the start pomodor or not
-        if (start == 0)
-            printf("do you wish to start pomodoro? (y/n) ");
-        else
-            printf("do you wish to continue? (y/n) ");
+  while (1) {
+    // verify if is the start pomodor or not
+    if (start == 1)
+      printf("do you wish to start pomodoro? (y/n) ");
+    else
+      printf("do you wish to continue? (y/n) ");
 
-        scanf(" %c", &input);
+    scanf(" %c", &input);
 
-        // input validation
-        if (input == 'y')
-            printf("\n");
-        else if (input == 'n')
-            exit(0);
-        else
-            continue;
-        break;
-    }
+    // input validation
+    if (input == 'y')
+      printf("\n");
+    else if (input == 'n')
+      exit(0);
+    else
+      continue;
+    break;
+  }
 }
