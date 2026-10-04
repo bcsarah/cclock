@@ -34,7 +34,8 @@ int handle_input(void)
     while ((ch = getch()) != ERR)
     {
         if (ch == 'q')       return 1; // quit
-        else if (ch == 'r')  return 2; // reset
+        else if (ch == 'p')  return 2; // pause 
+        else if (ch == 'r')  return 3; // reset
     }
     return 0;
 }
@@ -42,42 +43,53 @@ int handle_input(void)
 //
 void print_formatted_hour(int h, int m, int s)
 {
-    if (h > 0)  mvprintw(7, 10, "%02d:%02d:%02d", h, m, s);
-    else        mvprintw(7, 10, "%02d:%02d", m, s);
+    int x_hour_pos = (COLS - 8) / 2;
+    int x_min_pos = (COLS - 5) / 2;
+    int y = LINES / 2;
+
+    if (h > 0)  mvprintw(y - 2, x_hour_pos, "%02d:%02d:%02d", h, m, s);
+    else        mvprintw(y - 2, x_min_pos, "%02d:%02d", m, s);
 }
 
 //
 void draw_clock(int h, int m, int s)
 {
+    int x_title_pos = (COLS - 13) / 2;
+    int x_hour_pos = (COLS - 8) / 2;
+    int x_hint_pos = (COLS - 8) / 2;
+    int y = LINES / 2;
+
     erase();
-    mvprintw(5, 10, "CLOCK");
-
-    mvprintw(7, 10, "%02d:%02d:%02d", h, m, s);
-
-    mvprintw(9, 10, "[q] Sair");
+    mvprintw(y - 4, x_title_pos, "DIGITAL CLOCK");
+    mvprintw(y - 2, x_hour_pos, "%02d:%02d:%02d", h, m, s);
+    mvprintw(y, x_hint_pos, "[q] Quit");
     refresh();
 }
 
 //
 void draw_stopwatch(int h, int m, int s)
 {
+    int x_title_pos = (COLS - 9) / 2;
+    int x_hint_pos = (COLS - 32) / 2;
+    int y = LINES / 2;
+
     erase();
-    mvprintw(5, 10, "STOPWATCH");
-
+    mvprintw(y - 4, x_title_pos, "STOPWATCH");
     print_formatted_hour(h, m, s);
-
-    mvprintw(9, 10, "[q] Sair");
+    mvprintw(y, x_hint_pos, "[q] Quit | [p] Pause | [r] Reset");
     refresh();
 }
 
 //
 void draw_timer(int h, int m, int s)
 {
+    int x_title_pos = (COLS - 5) / 2;
+    int x_hint_pos = (COLS - 32) / 2;
+    int y = LINES / 2;
+
     erase();
-    mvprintw(5, 10, "TIMER");
-
+    mvprintw(y - 4, x_title_pos, "TIMER");
     print_formatted_hour(h, m, s);
-
-    mvprintw(9, 10, "[q] Sair");
+    mvprintw(y, x_hint_pos, "[q] Quit | [p] Pause | [r] Reset");
     refresh();
 }

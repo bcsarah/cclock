@@ -22,14 +22,21 @@ int is_opt(char *arg, char *a, char *b)
 }
 
 // 
-void update_time(int *secs, time_t *last, int direction)
+void update_time(int *secs, time_t *last, int direction, int paused)
 {
     time_t now = time(NULL);
 
-    if (now != *last)
+    if (paused)
     {
-        if (direction)  *secs += (int)(now - *last);
-        else            *secs -= (int)(now - *last);
+        *last = now;
+        return;
+    }
+
+    time_t delta = now - *last;
+    if (delta > 0)
+    {
+        if (direction)  *secs += (int)delta;
+        else            *secs -= (int)delta;
 
         *last = now;
     }

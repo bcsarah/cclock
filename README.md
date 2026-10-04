@@ -8,9 +8,9 @@
 - [x] clock in cclock
 - [x] use real clock in "sleep" function
 - [x] ncurses ui
+- [x] better ncurses ui
+- [x] pause/restart etc
 - [ ] pomodoro ui
-- [ ] better ncurses ui
-- [ ] pause/restart etc
 - [ ] log
 
 * [ ] good comments

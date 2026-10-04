@@ -9,6 +9,7 @@
 #include "aux.h"
 #include "ui.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -28,6 +29,10 @@ void digital_clock(void)
         p_time = localtime(&rawtime);
 
         draw_clock(p_time->tm_hour, p_time->tm_min, p_time->tm_sec);
+
+        int input = handle_input();
+        if (input == 1)  { cleanup_ui(); exit(0); }
+        
         usleep(50000);
     }
 }
@@ -38,7 +43,9 @@ void stopwatch(void)
     init_ui();
 
     int secs = 0;
+    int initial_sec = secs;
     time_t last = time(NULL);
+    int pause = 0;
 
     while (1)
     {
@@ -48,7 +55,12 @@ void stopwatch(void)
 
         draw_stopwatch(h, m, s);
 
-        update_time(&secs, &last, 1);
+        int input = handle_input();
+        if (input == 1)  { cleanup_ui(); exit(0); }
+        if (input == 2)  { pause = !pause; last = time(NULL); }
+        if (input == 3)  { secs = initial_sec; }
+
+        update_time(&secs, &last, 1, pause);
         usleep(50000);
     }
 }
@@ -59,7 +71,9 @@ void timer(int hour, int min, int sec)
     init_ui();
 
     int secs = hour * 3600 + min * 60 + sec;
+    int initial_sec = secs;
     time_t last = time(NULL);
+    int pause = 0;
 
     while (secs > 0)
     {
@@ -68,11 +82,19 @@ void timer(int hour, int min, int sec)
         int s = secs % 60;
 
         draw_timer(h, m, s);
-        update_time(&secs, &last, 0);
+
+        int input = handle_input();
+        if (input == 1)  { cleanup_ui(); exit(0); }
+        if (input == 2)  { pause = !pause; last = time(NULL); }
+        if (input == 3)  { secs = initial_sec; }
+
+        update_time(&secs, &last, 0, pause);
         usleep(50000);
     }
 
+    draw_timer(0, 0, 0);
     sound_alert(3);
+    cleanup_ui();
 }
 
 //

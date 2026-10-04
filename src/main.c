@@ -61,5 +61,9 @@ int main(int argc, char *argv[])
         pomodoro(pom, brk);
     }
 
+    // if args dont match
+    else
+        show_help();
+
     return 0;
 }
