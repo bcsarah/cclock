@@ -4,14 +4,16 @@
 
 ## to-do
 - [x] sound 
-- [x] good comments
 - [x] initial stopwatch time
 - [x] clock in cclock
 - [x] use real clock in "sleep" function
-- [ ] ncurses ui
+- [x] ncurses ui
+- [ ] pomodoro ui
+- [ ] better ncurses ui
 - [ ] pause/restart etc
 - [ ] log
 
+* [ ] good comments
 * [ ] a good --help
 * [ ] a good readme (i suck at ts)
 
