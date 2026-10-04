@@ -32,13 +32,14 @@ void update_time(int *secs, time_t *last, int direction, int paused)
         return;
     }
 
-    time_t delta = now - *last;
-    if (delta > 0)
+    if (now > *last)
     {
-        if (direction)  *secs += (int)delta;
-        else            *secs -= (int)delta;
+        int ticks = (int)(now - *last);
 
-        *last = now;
+        if (direction)  *secs += ticks;
+        else            *secs -= ticks;
+
+        *last += ticks;
     }
 }
 
@@ -63,7 +64,7 @@ void continue_pomodoro(int start)
         if (start == 1)  printf("do you wish to start pomodoro? (y/n) ");
         else             printf("do you wish to continue? (y/n) ");
 
-        scanf(" %c", &input);
+        if (scanf(" %c", &input) != 1)  exit(1);
 
         if (input == 'y')       printf("\n");
         else if (input == 'n')  exit(0);

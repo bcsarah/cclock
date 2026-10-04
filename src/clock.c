@@ -58,7 +58,7 @@ void stopwatch(void)
         int input = handle_input();
         if (input == 1)  { cleanup_ui(); exit(0); }
         if (input == 2)  { pause = !pause; last = time(NULL); }
-        if (input == 3)  { secs = initial_sec; }
+        if (input == 3)  { secs = initial_sec; last = time(NULL); }
 
         update_time(&secs, &last, 1, pause);
         usleep(50000);
@@ -86,7 +86,7 @@ void timer(int hour, int min, int sec)
         int input = handle_input();
         if (input == 1)  { cleanup_ui(); exit(0); }
         if (input == 2)  { pause = !pause; last = time(NULL); }
-        if (input == 3)  { secs = initial_sec; }
+        if (input == 3)  { secs = initial_sec; last = time(NULL); }
 
         update_time(&secs, &last, 0, pause);
         usleep(50000);
