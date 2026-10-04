@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 /* == AUXILIARY == */
 // just clean a line xd
@@ -17,9 +18,15 @@ void clear_line(void) {
 }
 
 // wait a second duuh
-void wait_a_sec(void) {
-  clock_t stop = clock() + CLOCKS_PER_SEC;
-  while (clock() < stop) {
+void update_time(int *secs, time_t *last, int direction) {
+  time_t now = time(NULL);
+  if (now != *last) {
+    if (direction) {
+      *secs += (int)(now - *last);
+    } else {
+      *secs -= (int)(now - *last);
+    }
+    *last = now;
   }
 }
 
@@ -42,7 +49,7 @@ void sound_alert(int count) {
     printf("\a");
     fflush(stdout);
     if (!(i == count - 1))
-      wait_a_sec();
+      sleep(1);
   }
 }
 

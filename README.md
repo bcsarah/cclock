@@ -7,8 +7,10 @@
 - [x] good comments
 - [x] initial stopwatch time
 - [x] clock in cclock
+- [x] use real clock in "sleep" function
+- [ ] ncurses ui
+- [ ] pause/restart etc
 - [ ] log
-- [ ] pause
 
 * [ ] a good --help
 * [ ] a good readme (i suck at ts)

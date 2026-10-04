@@ -1,6 +1,6 @@
 all:
 	@mkdir -p bin
-	gcc -std=c11 -Wall -Wextra -g src/main.c -o bin/cclock
+	gcc -Wall -Wextra -g src/main.c -o bin/cclock
 
 run: all
 	./bin/cclock

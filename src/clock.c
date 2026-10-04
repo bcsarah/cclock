@@ -8,6 +8,7 @@
 #include "aux.c"
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 
 /* formula
 int i;
@@ -35,39 +36,40 @@ void digital_clock(void) {
     printf("\r%02d:%02d:%02d", p_time->tm_hour, p_time->tm_min, p_time->tm_sec);
     fflush(stdout);
 
-    wait_a_sec();
+    sleep(1);
   }
 }
 
 // start a stopwatch with initial time feature
 void stopwatch(int min, int seg) {
-  int i = min * 60 + seg;
+  int secs = min * 60 + seg;
+  time_t last = time(NULL);
 
   while (1) {
-    int h = i / 3600;
-    int m = (i % 3600) / 60;
-    int s = i % 60;
+    int h = secs / 3600;
+    int m = (secs % 3600) / 60;
+    int s = secs % 60;
 
     print_formatted_hour(h, m, s);
-    wait_a_sec();
 
-    i++;
+    update_time(&secs, &last, 1);
+    usleep(50000);
   }
 }
 
 // start an timer for hour, min and seg
 void timer(int hour, int min, int seg) {
-  int i = hour * 3600 + min * 60 + seg;
+  int secs = hour * 3600 + min * 60 + seg;
+  time_t last = time(NULL);
 
-  while (i > 0) {
-    int h = i / 3600;
-    int m = (i % 3600) / 60;
-    int s = i % 60;
+  while (secs > 0) {
+    int h = secs / 3600;
+    int m = (secs % 3600) / 60;
+    int s = secs % 60;
 
     print_formatted_hour(h, m, s);
-    wait_a_sec();
-
-    i--;
+    update_time(&secs, &last, 0);
+    usleep(50000);
   }
 
   clear_line();
