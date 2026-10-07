@@ -43,7 +43,9 @@ int main(int argc, char *argv[])
         if (argc >= 4)  m = atoi(argv[argc - 2]);
         if (argc >= 5)  h = atoi(argv[argc - 3]);
 
-        timer(h, m, s);
+        int secs = h * 3600 + m * 60 + s;
+
+        timer(secs);
     }
 
     // pomodoro

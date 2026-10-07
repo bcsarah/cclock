@@ -6,6 +6,7 @@
  */
 
 #include "aux.h"
+#include "ui.h"
 #include <stdio.h>
 #include <ncurses.h>
 #include <stdlib.h>
@@ -51,24 +52,5 @@ void sound_alert(int count)
         printf("\a");
         fflush(stdout);
         sleep(1);
-    }
-}
-
-// 
-void continue_pomodoro(int start)
-{
-    char input;
-
-    while (1)
-    {
-        if (start == 1)  printf("do you wish to start pomodoro? (y/n) ");
-        else             printf("do you wish to continue? (y/n) ");
-
-        if (scanf(" %c", &input) != 1)  exit(1);
-
-        if (input == 'y')       printf("\n");
-        else if (input == 'n')  exit(0);
-        else                    continue;
-        break;
     }
 }

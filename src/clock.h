@@ -5,7 +5,7 @@
 
 void digital_clock(void);
 void stopwatch(void);
-void timer(int hour, int min, int sec);
+void timer(int secs);
 void pomodoro(int pom, int brk);
 
 #endif

@@ -7,6 +7,8 @@
 
 #include "ui.h"
 #include <ncurses.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 /* == [ UI ] == */
@@ -23,6 +25,7 @@ void init_ui(void)
 //
 void cleanup_ui(void)
 {
+    clear();
     endwin();
 }
 
@@ -36,13 +39,18 @@ int handle_input(void)
         if (ch == 'q')       return 1; // quit
         else if (ch == 'p')  return 2; // pause 
         else if (ch == 'r')  return 3; // reset
+        else if (ch == 's')  return 4; // skip 
     }
     return 0;
 }
 
 //
-void print_formatted_hour(int h, int m, int s)
+void print_formatted_hour(int secs)
 {
+    int h = secs / 3600;
+    int m = (secs % 3600) / 60;
+    int s = secs % 60;
+
     int x_hour_pos = (COLS - 8) / 2;
     int x_min_pos = (COLS - 5) / 2;
     int y = LINES / 2;
@@ -52,44 +60,43 @@ void print_formatted_hour(int h, int m, int s)
 }
 
 //
-void draw_clock(int h, int m, int s)
+void draw_ui(int secs, const char *title, const char *description, const char *hint)
 {
-    int x_title_pos = (COLS - 13) / 2;
-    int x_hour_pos = (COLS - 8) / 2;
-    int x_hint_pos = (COLS - 8) / 2;
     int y = LINES / 2;
 
+    int title_x = (COLS - (int)strlen(title)) / 2;
+    int description_x = (COLS - (int)strlen(description)) / 2;
+    int hint_x = (COLS - (int)strlen(hint)) / 2;
+
     erase();
-    mvprintw(y - 4, x_title_pos, "DIGITAL CLOCK");
-    mvprintw(y - 2, x_hour_pos, "%02d:%02d:%02d", h, m, s);
-    mvprintw(y, x_hint_pos, "[q] Quit");
+
+    mvprintw(y - 5, title_x, "%s", title);
+    mvprintw(y - 4, description_x, "%s", description);
+
+    print_formatted_hour(secs);
+
+    mvprintw(y, hint_x, "%s", hint);
+
     refresh();
 }
 
-//
-void draw_stopwatch(int h, int m, int s)
+// 
+void continue_pomodoro(int time, int work)
 {
-    int x_title_pos = (COLS - 9) / 2;
-    int x_hint_pos = (COLS - 32) / 2;
-    int y = LINES / 2;
+    while (1)
+    {
+        int x = (COLS - 26) / 2;
+        int y = (LINES - 2) / 2;
+        const char *mode = work ? "work" : "break";
+        
+        cleanup_ui();
+        mvprintw(y - 2, x, "do you wish to continue to %dmin %s? (y/n)", time, mode);
 
-    erase();
-    mvprintw(y - 4, x_title_pos, "STOPWATCH");
-    print_formatted_hour(h, m, s);
-    mvprintw(y, x_hint_pos, "[q] Quit | [p] Pause | [r] Reset");
-    refresh();
-}
+        nodelay(stdscr, FALSE);
+        char input = getch();
+        nodelay(stdscr, TRUE);
 
-//
-void draw_timer(int h, int m, int s)
-{
-    int x_title_pos = (COLS - 5) / 2;
-    int x_hint_pos = (COLS - 32) / 2;
-    int y = LINES / 2;
-
-    erase();
-    mvprintw(y - 4, x_title_pos, "TIMER");
-    print_formatted_hour(h, m, s);
-    mvprintw(y, x_hint_pos, "[q] Quit | [p] Pause | [r] Reset");
-    refresh();
+        if (input == 'y' || input == 'Y')      break;
+        else if (input == 'n' || input == 'N') { endwin(); exit(0); }
+    }
 }
