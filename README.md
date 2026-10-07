@@ -11,7 +11,7 @@
 - [x] better ncurses ui
 - [x] pause/restart etc
 - [x] pomodoro ui
-- [ ] alarm
+- [x] alarm
 
 * [ ] good comments
 * [ ] a good --help
