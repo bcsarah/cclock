@@ -10,8 +10,8 @@
 - [x] ncurses ui
 - [x] better ncurses ui
 - [x] pause/restart etc
-- [ ] pomodoro ui
-- [ ] log
+- [x] pomodoro ui
+- [ ] alarm
 
 * [ ] good comments
 * [ ] a good --help
