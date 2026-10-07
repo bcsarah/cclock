@@ -140,3 +140,47 @@ void pomodoro(int pom, int brk)
 
     cleanup_ui();
 }
+
+// alarm
+void clock_alarm(int h, int m)
+{
+    init_ui();
+
+    time_t rawtime;
+    struct tm *now;
+
+    char desc[64];
+    snprintf(desc, sizeof(desc), "Set to %02d:%02d", h, m);
+
+    while (1)
+    {
+        rawtime = time(NULL);
+        now = localtime(&rawtime);
+        int secs = now->tm_hour * 3600 + now->tm_min * 60 + now->tm_sec;
+
+        draw_ui(secs, "ALARM", desc, "[q] Quit");
+
+        if (now == NULL)  break;
+
+        if (now->tm_hour > h || (now->tm_hour == h && now->tm_min >= m))
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                sound_alert(10);
+                sleep(3);
+            }
+            break;
+        }
+
+        int input = handle_input();
+
+        if (input == 1) {
+            cleanup_ui();
+            return;
+        }
+
+        usleep(50000);
+    }
+
+    cleanup_ui();
+}

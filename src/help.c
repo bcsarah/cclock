@@ -32,3 +32,10 @@ void pomodoro_usage(void)
     printf("\tcclock pomodoro 30     -> 30min / 5min\n");
     printf("\tcclock pomodoro 30 10  -> 30min / 10min\n");
 }
+
+// show pomodoro function usage
+void alarm_usage(void)
+{
+    printf("USAGE: cclock alarm [h] [m]\n");
+    printf("\tcclock pomodoro 18 30  -> 18:30\n");
+}

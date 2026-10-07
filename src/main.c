@@ -62,6 +62,16 @@ int main(int argc, char *argv[])
         pomodoro(pom, brk);
     }
 
+    else if (is_opt(opt, "a", "alarm"))
+    {
+        if (argc > 4)  { alarm_usage(); return 1; }
+
+        int h = atoi(argv[2]);
+        int m = atoi(argv[3]);
+
+        clock_alarm(h, m);
+    }
+
     // if args dont match
     else
         show_help();

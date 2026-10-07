@@ -6,5 +6,6 @@
 void show_help(void);
 void timer_usage(void);
 void pomodoro_usage(void);
+void alarm_usage(void);
 
 #endif

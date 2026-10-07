@@ -6,10 +6,8 @@
  */
 
 #include "aux.h"
-#include "ui.h"
 #include <stdio.h>
 #include <ncurses.h>
-#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
