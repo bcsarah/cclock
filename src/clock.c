@@ -26,7 +26,9 @@ void digital_clock(void)
     {
         time(&rawtime);
         p_time = localtime(&rawtime);
+        int secs = p_time->tm_hour * 3600 + p_time->tm_min * 60 + p_time->tm_sec;
 
+        draw_ui(secs, "DIGITAL CLOCK", "", "[q] Quit");
 
         int input = handle_input();
         if (input == 1)  { cleanup_ui(); exit(0); }
@@ -47,9 +49,7 @@ void stopwatch(void)
 
     while (1)
     {
-        int h = secs / 3600;
-        int m = (secs % 3600) / 60;
-        int s = secs % 60;
+        draw_ui(secs, "STOPWATCH", "", "[q] Quit | [p] Pause | [r] Restart");
 
         int input = handle_input();
         if (input == 1)  { cleanup_ui(); exit(0); }
@@ -72,9 +72,7 @@ void timer(int secs)
 
     while (secs > 0)
     {
-        int h = secs / 3600;
-        int m = (secs % 3600) / 60;
-        int s = secs % 60;
+        draw_ui(secs, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart");
 
         int input = handle_input();
 
@@ -97,8 +95,10 @@ void pomodoro(int pom, int brk)
 
     while (1) 
     {
+        draw_ui(pom * 60, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
         continue_pomodoro(brk, 1);
 
+        draw_ui(brk * 60, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
         continue_pomodoro(pom, 0);
 
         i++;

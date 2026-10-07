@@ -64,17 +64,22 @@ void draw_ui(int secs, const char *title, const char *description, const char *h
 {
     int y = LINES / 2;
 
+    int has_description = description != NULL && description[0] != '\0';
+
+    cleanup_ui();
+
+    int title_y = has_description ? y - 5 : y - 4;
     int title_x = (COLS - (int)strlen(title)) / 2;
-    int description_x = (COLS - (int)strlen(description)) / 2;
     int hint_x = (COLS - (int)strlen(hint)) / 2;
 
-    erase();
+    mvprintw(title_y, title_x, "%s", title);
 
-    mvprintw(y - 5, title_x, "%s", title);
-    mvprintw(y - 4, description_x, "%s", description);
+    if (has_description) {
+        int description_x = (COLS - (int)strlen(description)) / 2;
+        mvprintw(y - 4, description_x, "%s", description);
+    }
 
     print_formatted_hour(secs);
-
     mvprintw(y, hint_x, "%s", hint);
 
     refresh();
