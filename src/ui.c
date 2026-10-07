@@ -90,8 +90,11 @@ void continue_pomodoro(int time, int work)
 {
     while (1)
     {
-        int x = (COLS - 26) / 2;
+        const char *text = "do you wish to continue to %dmin %s? (y/n)";
+
+        int x = (COLS - (int)strlen(text)) / 2;
         int y = (LINES - 2) / 2;
+
         const char *mode = work ? "work" : "break";
         
         cleanup_ui();

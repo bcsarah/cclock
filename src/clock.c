@@ -9,6 +9,7 @@
 #include "aux.h"
 #include "ui.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -84,6 +85,37 @@ void timer(int secs)
         usleep(50000);
     }
 
+    draw_ui(0, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart");
+    sound_alert(3);
+    cleanup_ui();
+}
+
+//
+void timer_pomodoro(int secs, int loop, int work)
+{
+    int initial_sec = secs;
+    int pause = 0;
+    time_t last = time(NULL);
+
+    char description[64];
+
+    snprintf(description, sizeof(description), "Loop %d - %s time!", loop, work ? "Work" : "Break");
+
+    while (secs > 0)
+    {
+        draw_ui(secs, "POMODORO", description, "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
+
+        int input = handle_input();
+        if (input == 1) { cleanup_ui(); exit(0); }
+        if (input == 2) { pause = !pause; last = time(NULL); }
+        if (input == 3) { secs = initial_sec; last = time(NULL); }
+        if (input == 4) { break; }
+
+        update_time(&secs, &last, 0, pause);
+        usleep(50000);
+    }
+
+    draw_ui(0, "POMODORO", description, "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
     sound_alert(3);
     cleanup_ui();
 }
@@ -91,16 +123,20 @@ void timer(int secs)
 //
 void pomodoro(int pom, int brk)
 {
-    int i = 1;
+    int loop = 1;
 
-    while (1) 
+    init_ui();
+
+    while (1)
     {
-        draw_ui(pom * 60, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
-        continue_pomodoro(brk, 1);
+        timer_pomodoro(pom * 60, loop, 1);
+        continue_pomodoro(brk, 0);
 
-        draw_ui(brk * 60, "TIMER", "", "[q] Quit | [p] Pause | [r] Restart | [s] Skip");
-        continue_pomodoro(pom, 0);
+        timer_pomodoro(brk * 60, loop, 0);
+        continue_pomodoro(pom, 1);
 
-        i++;
+        loop++;
     }
+
+    cleanup_ui();
 }
