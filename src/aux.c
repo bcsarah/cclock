@@ -8,41 +8,19 @@
 #include "aux.h"
 #include <stdio.h>
 #include <ncurses.h>
-#include <time.h>
 #include <unistd.h>
 #include <string.h>
 
 
 /* == AUXILIARY == */
-//
+// check if a arg (usually opt, that stands for option)
+// if valid or not. return 1 if is option, 0 if isn't
 int is_opt(char *arg, char *a, char *b)
 {
     return strcmp(arg, a) == 0 || strcmp(arg, b) == 0;
 }
 
-// 
-void update_time(int *secs, time_t *last, int direction, int paused)
-{
-    time_t now = time(NULL);
-
-    if (paused)
-    {
-        *last = now;
-        return;
-    }
-
-    if (now > *last)
-    {
-        int ticks = (int)(now - *last);
-
-        if (direction)  *secs += ticks;
-        else            *secs -= ticks;
-
-        *last += ticks;
-    }
-}
-
-//
+// send a sound_alert n times with \a
 void sound_alert(int count)
 {
     for (int i = 0; i < count; i++)

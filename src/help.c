@@ -37,5 +37,5 @@ void pomodoro_usage(void)
 void alarm_usage(void)
 {
     printf("USAGE: cclock alarm [h] [m]\n");
-    printf("\tcclock pomodoro 18 30  -> 18:30\n");
+    printf("\tcclock alarm 18 30  -> 18:30\n");
 }

@@ -15,6 +15,30 @@
 
 
 /* ==[ CLOCK FUNCTIONS ]== */
+// 
+void update_time(int *secs, time_t *last, int direction, int paused)
+{
+    // verify the 
+    time_t now = time(NULL);
+
+    if (paused)
+    {
+        *last = now;
+        return;
+    }
+
+    if (now > *last)
+    {
+        int ticks = (int)(now - *last);
+
+        // verify the direction. usually, timer has the direction set to 0, that decrases ticks.
+        if (direction)  *secs += ticks;
+        else            *secs -= ticks;
+
+        *last += ticks;
+    }
+}
+
 //
 void digital_clock(void)
 {

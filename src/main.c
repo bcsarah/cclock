@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
         if (argc >= 4)  m = atoi(argv[argc - 2]);
         if (argc >= 5)  h = atoi(argv[argc - 3]);
 
+        // calculate total time in secs 
         int secs = h * 3600 + m * 60 + s;
         timer(secs);
     }
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
         // verify args quantity
         if (argc > 4)  { pomodoro_usage(); return 1; }
 
-        // asign time if arguments are given
+        // asign time if arguments are given. else, use the 25/5 default
         if (argc >= 3)  pom = atoi(argv[2]);
         if (argc >= 4)  brk = atoi(argv[3]);
 
@@ -64,8 +65,10 @@ int main(int argc, char *argv[])
 
     else if (is_opt(opt, "a", "alarm"))
     {
+        // verify args quantity
         if (argc > 4)  { alarm_usage(); return 1; }
 
+        // asign hours and minutes by position
         int h = atoi(argv[2]);
         int m = atoi(argv[3]);
 
